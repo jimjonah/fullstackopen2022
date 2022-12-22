@@ -4,6 +4,8 @@ const Display = props => <div><h1>{props.value}</h1></div>
 
 const Results = props => <div>{props.value} {props.count}</div>
 
+const TableRow = props =>  <tr><td>{props.value}</td><td>{props.count}</td></tr>
+
 const Button = (props) => (
     <button onClick={props.handleClick}>
       {props.text}
@@ -11,9 +13,9 @@ const Button = (props) => (
 )
 const StatisticLine = ({text, value}) => {
   return (
-      <div>
-        <Results value={text} count={value}/>
-      </div>
+      <>
+        <TableRow value={text} count={value}/>
+      </>
   )
 }
 const Statistics = ({good, neutral, bad}) => {
@@ -29,12 +31,14 @@ const Statistics = ({good, neutral, bad}) => {
     return (
         <div>
           <Display value={"statistics"}/>
-          <StatisticLine text="good" value ={good} />
-          <StatisticLine text="neutral" value ={neutral} />
-          <StatisticLine text="bad" value ={bad} />
-          <StatisticLine text="all" value ={total} />
-          <StatisticLine text="average" value ={(good - bad) / total} />
-          <StatisticLine text="positive" value ={(good / total) * 100 + " %"} />
+          <table><tbody>
+            <StatisticLine text="good" value ={good} />
+            <StatisticLine text="neutral" value ={neutral} />
+            <StatisticLine text="bad" value ={bad} />
+            <StatisticLine text="all" value ={total} />
+            <StatisticLine text="average" value ={Number((good - bad) / total).toFixed(2)} />
+            <StatisticLine text="positive" value ={Number((good / total) * 100).toFixed(2) + " %"} />
+          </tbody></table>
         </div>
     )
   }
