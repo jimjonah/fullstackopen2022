@@ -30,7 +30,9 @@ const App = () => {
         <Results value={"good"} count={good}/>
         <Results value={"neutral"} count={neutral}/>
         <Results value={"bad"} count={bad}/>
-
+        <Results value={"all"} count={good + neutral + bad}/>
+        <Results value={"average"} count={(good - bad)/ ( good + neutral + bad)}/>
+        <Results value={"positive"} count={(good / ( good + neutral + bad)) * 100 +" %" }/>
       </div>
   )
 }
