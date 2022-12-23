@@ -6,6 +6,10 @@ const Button = (props) => (
     </button>
 )
 
+const Display = props => <h4>{props.value}</h4>
+const Answer = props => <p>{props.value}</p>
+
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -22,27 +26,33 @@ const App = () => {
 
   // Generate a number between 0 and max
   const generateRandomInteger = max => {
-    return Math.floor(Math.random() * max) + 1;
+    return Math.floor(Math.random() * max) + 0;
   }
 
   const vote = position => {
-    // const points = [1, 4, 6, 3]
-
     const copy = [...points]
-  // increment the value in position 2 by one
     copy[position] += 1
-
     setPoints(copy)
+  }
+
+  const highestVote = () => {
+    const copy =  [...points]
+    copy.sort((a, b) => a - b)
+    return points.indexOf(copy[6])
   }
 
   return (
       <div>
-        <h4>{anecdotes[selected]}</h4>
-        <h4>has {points[selected]} votes</h4>
+        <Display value={anecdotes[selected]}/>
+        <Display value={"has "+ points[selected] + " votes"}/>
 
         <Button handleClick={() => vote(selected)}  text={"vote"}/>
+        <Button handleClick={() => setSelected(generateRandomInteger(7))}  text={"next anecdote"}/>
 
-        <Button handleClick={() => setSelected(generateRandomInteger(6))}  text={"next anecdote"}/>
+        <Display value={"anecode with most votes"}/>
+        <Answer value={ anecdotes[highestVote()]}/>
+        <Display value={"has "+ points[highestVote()] + " votes"}/>
+        {/*<Answer value={points.join(' ') + ":" + highestVote()}/>*/}
       </div>
 )
 }
