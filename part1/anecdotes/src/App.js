@@ -18,15 +18,30 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState(Array(7).fill(0));
 
   // Generate a number between 0 and max
-  function generateRandomInteger(max) {
+  const generateRandomInteger = max => {
     return Math.floor(Math.random() * max) + 1;
+  }
+
+  const vote = position => {
+    // const points = [1, 4, 6, 3]
+
+    const copy = [...points]
+  // increment the value in position 2 by one
+    copy[position] += 1
+
+    setPoints(copy)
   }
 
   return (
       <div>
         <h4>{anecdotes[selected]}</h4>
+        <h4>has {points[selected]} votes</h4>
+
+        <Button handleClick={() => vote(selected)}  text={"vote"}/>
+
         <Button handleClick={() => setSelected(generateRandomInteger(6))}  text={"next anecdote"}/>
       </div>
 )
