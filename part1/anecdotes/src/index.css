@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+  font-family: Serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-left: 10px;
+
+
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;
+}
+
+
+
+h1 {
+  font-size: 24px;
+  font-family: Serif;
+}
