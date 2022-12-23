@@ -6,8 +6,8 @@ const Button = (props) => (
     </button>
 )
 
-const Display = props => <h4>{props.value}</h4>
-const Answer = props => <p>{props.value}</p>
+const Display = props => <h3>{props.value}</h3>
+const Answer = props => <div>{props.value}</div>
 
 
 const App = () => {
@@ -43,15 +43,16 @@ const App = () => {
 
   return (
       <div>
-        <Display value={anecdotes[selected]}/>
-        <Display value={"has "+ points[selected] + " votes"}/>
+        <Display value={"Anecode of the day"}/>
+        <Answer value={anecdotes[selected]}/>
+        <Answer value={"has "+ points[selected] + " votes"}/>
 
         <Button handleClick={() => vote(selected)}  text={"vote"}/>
         <Button handleClick={() => setSelected(generateRandomInteger(7))}  text={"next anecdote"}/>
 
-        <Display value={"anecode with most votes"}/>
+        <Display value={"Anecode with most votes"}/>
         <Answer value={ anecdotes[highestVote()]}/>
-        <Display value={"has "+ points[highestVote()] + " votes"}/>
+        <Answer value={"has "+ points[highestVote()] + " votes"}/>
         {/*<Answer value={points.join(' ') + ":" + highestVote()}/>*/}
       </div>
 )
