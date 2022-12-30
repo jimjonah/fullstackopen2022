@@ -111,7 +111,6 @@ const Weather = ({country}) => {
   console.log(api_key)
   console.log(country)
 
-  //https://api.openweathermap.org/data/2.5/weather?lat=16&lon=-10&appid=c5a3e379ea236e91968a9f405beb4eb2
   const weatherHook = () => {
     const urlToGet = `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${country.latlng[0]}&lon=${country.latlng[1]}&appid=${api_key}`
     console.log(urlToGet)
