@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import {useState, useEffect} from 'react'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
@@ -30,15 +30,26 @@ const App = () => {
     event.preventDefault()
     // console.log('button clicked', event.target)
 
-    if(persons.find(person => person.name === newName)){
-      // console.log(`${newName} is already added to phonebook`)
-      alert(`${newName} is already added to phonebook`)
-    } else {
-      const personObject = {
-        name: newName,
-        number: newNumber,
-      }
+    const personObject = {
+      name: newName,
+      number: newNumber,
+    }
 
+    const result = persons.find(person => person.name === newName)
+
+    if (result) {
+      if (window.confirm(
+          `${result.name} is already added to phonebook, replace the old number with a new one?`)) {
+        personsService
+        .updatePerson(personObject, result.id)
+        .then(personObject => {
+          // console.log(persons.filter(item => item.name != result.name).concat(personObject))
+          setPersons(persons.filter(item => item.name != personObject.name).concat(personObject))
+          setNewNumber('')
+          setNewName('')
+        })
+      }
+    } else {
       personsService
       .create(personObject)
       .then(personObject => {
@@ -58,6 +69,21 @@ const App = () => {
     })
   }, [])
 
+  const handleDeletePerson = (event) => {
+    // console.log(event.target.value)
+    const name = event.target.value
+    const result = persons.find(person => person.name === name)
+
+    if (result) {
+      // console.log(`${result.name} is about to be delete`)
+
+      if (window.confirm(`Delete ${event.target.value}?`)) {
+        // console.log('do delete')
+        personsService.deletePerson(result.id)
+        .then(setPersons(persons.filter(item => item.name != result.name)))
+      }
+    }
+  }
 
   return (
       <div>
@@ -65,11 +91,14 @@ const App = () => {
         <Filter newFilter={newFilter} handleFilterChange={handleFilterChange}/>
 
         <h3>Add a new</h3>
-        <PersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange}
-                    newNumber={newNumber} handleNumberChange={handleNumberChange}/>
+        <PersonForm addPerson={addPerson} newName={newName}
+                    handleNameChange={handleNameChange}
+                    newNumber={newNumber}
+                    handleNumberChange={handleNumberChange}/>
 
         <h3>Numbers</h3>
-        <Persons persons={persons} newFilter={newFilter} setPersons={setPersons}/>
+        <Persons persons={persons} newFilter={newFilter} setPersons={setPersons}
+                 handleDeletePerson={handleDeletePerson}/>
       </div>
   )
 }
