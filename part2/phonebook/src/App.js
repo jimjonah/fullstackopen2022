@@ -28,10 +28,10 @@ const App = () => {
   }
   const addPerson = (event) => {
     event.preventDefault()
-    console.log('button clicked', event.target)
+    // console.log('button clicked', event.target)
 
     if(persons.find(person => person.name === newName)){
-      console.log(`${newName} is already added to phonebook`)
+      // console.log(`${newName} is already added to phonebook`)
       alert(`${newName} is already added to phonebook`)
     } else {
       const personObject = {
@@ -43,17 +43,18 @@ const App = () => {
       .create(personObject)
       .then(personObject => {
         setPersons(persons.concat(personObject))
-        setNewName('')
         setNewNumber('')
+        setNewName('')
       })
     }
   }
-  
+
   useEffect(() => {
     personsService
     .getAll()
     .then(initialPersons => {
       setPersons(initialPersons)
+      // console.log(initialPersons)
     })
   }, [])
 
@@ -68,7 +69,7 @@ const App = () => {
                     newNumber={newNumber} handleNumberChange={handleNumberChange}/>
 
         <h3>Numbers</h3>
-        <Persons persons={persons} newFilter={newFilter}/>
+        <Persons persons={persons} newFilter={newFilter} setPersons={setPersons}/>
       </div>
   )
 }
