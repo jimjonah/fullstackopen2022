@@ -14,6 +14,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
+  const [infoMessage, setInfoMessage] = useState(null)
 
 
   const handleNameChange = (event) => {
@@ -51,8 +52,15 @@ const App = () => {
           setPersons(persons.filter(item => item.name != personObject.name).concat(personObject))
           setNewNumber('')
           setNewName('')
-          setErrorMessage(
+          setInfoMessage(
               `Updated ${personObject.name}`
+          )
+          setTimeout(() => {
+            setInfoMessage(null)
+          }, 5000)
+        }).catch(error => {
+          setErrorMessage(
+              `Information of '${personObject.name}' was already removed from server`
           )
           setTimeout(() => {
             setErrorMessage(null)
@@ -66,11 +74,11 @@ const App = () => {
         setPersons(persons.concat(personObject))
         setNewNumber('')
         setNewName('')
-        setErrorMessage(
+        setInfoMessage(
             `Added ${personObject.name}`
         )
         setTimeout(() => {
-          setErrorMessage(null)
+          setInfoMessage(null)
         }, 5000)
       })
     }
@@ -104,7 +112,7 @@ const App = () => {
   return (
       <div>
         <h1>Phonebook</h1>
-        <Notification message={errorMessage} />
+        <Notification infoMessage={infoMessage} errorMessage={errorMessage}/>
         <Filter newFilter={newFilter} handleFilterChange={handleFilterChange}/>
 
         <h3>Add a new</h3>
